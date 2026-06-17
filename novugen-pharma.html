@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novugen Pharma Uzbekistan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #00A8E8;
+    --primary-dark: #0077B6;
+    --accent: #7BC67E;
+    --accent2: #56CFE1;
+    --bg: #0A0E1A;
+    --bg2: #0F1628;
+    --bg3: #141E35;
+    --card: #1A2540;
+    --card2: #1E2C4A;
+    --text: #E8EDF5;
+    --text-muted: #8A9BB8;
+    --border: rgba(0,168,232,0.15);
+    --shadow: 0 8px 40px rgba(0,0,0,0.5);
+    --gradient: linear-gradient(135deg, #00A8E8, #7BC67E);
+    --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  [data-theme="light"] {
+    --bg: #F0F5FF;
+    --bg2: #E4EDFF;
+    --bg3: #FFFFFF;
+    --card: #FFFFFF;
+    --card2: #F0F5FF;
+    --text: #0A0E1A;
+    --text-muted: #4A6080;
+    --border: rgba(0,119,182,0.18);
+    --shadow: 0 8px 40px rgba(0,119,182,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background var(--transition), color var(--transition);
+  }
+
+  /* ─── LOADER ─── */
+  #loader {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #050810;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 28px;
+  }
+  .loader-logo {
+    width: 180px;
+    opacity: 0;
+    transform: scale(0.6);
+    animation: loaderPop 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.3s forwards;
+    filter: drop-shadow(0 0 30px rgba(0,168,232,0.6));
+  }
+  @keyframes loaderPop {
+    to { opacity: 1; transform: scale(1); }
+  }
+  .loader-bar-wrap {
+    width: 220px; height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 99px; overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 0.4s 0.9s forwards;
+  }
+  .loader-bar {
+    height: 100%; width: 0;
+    background: linear-gradient(90deg, #00A8E8, #7BC67E);
+    border-radius: 99px;
+    animation: barFill 1.4s 1s cubic-bezier(0.4,0,0.2,1) forwards;
+    box-shadow: 0 0 12px rgba(0,168,232,0.8);
+  }
+  @keyframes barFill { to { width: 100%; } }
+  .loader-text {
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    opacity: 0;
+    animation: fadeIn 0.4s 1.1s forwards;
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  #loader.hide {
+    animation: loaderFade 0.6s 0.2s forwards;
+  }
+  @keyframes loaderFade {
+    to { opacity: 0; pointer-events: none; }
+  }
+  .loader-particles {
+    position: absolute; inset: 0; pointer-events: none;
+    overflow: hidden;
+  }
+  .lp {
+    position: absolute; width: 4px; height: 4px;
+    border-radius: 50%; background: #00A8E8;
+    opacity: 0;
+    animation: lpFloat var(--d, 3s) var(--delay, 0s) ease-in-out infinite;
+  }
+  @keyframes lpFloat {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    20% { opacity: 0.6; }
+    80% { opacity: 0.3; }
+    100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+  }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 0 5%;
+    height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    backdrop-filter: blur(20px) saturate(1.5);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    background: rgba(10,14,26,0.85);
+    border-bottom: 1px solid var(--border);
+    transition: all var(--transition);
+  }
+  [data-theme="light"] nav {
+    background: rgba(240,245,255,0.88);
+  }
+  .nav-logo {
+    height: 38px;
+    cursor: pointer;
+    filter: brightness(1.1);
+    transition: transform var(--transition), filter var(--transition);
+  }
+  .nav-logo:hover { transform: scale(1.05); filter: brightness(1.3) drop-shadow(0 0 8px #00A8E8); }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 14px; font-weight: 500; letter-spacing: 0.3px;
+    transition: color var(--transition);
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 2px;
+    background: var(--gradient);
+    transition: width var(--transition);
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-controls {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .lang-btn, .theme-btn {
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.8px;
+    cursor: pointer;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    transition: all var(--transition);
+  }
+  .lang-btn:hover, .theme-btn:hover,
+  .lang-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+    box-shadow: 0 0 16px rgba(0,168,232,0.4);
+  }
+  .theme-btn { padding: 6px 12px; font-size: 15px; }
+  .theme-btn:hover { background: var(--card); color: var(--text); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 5% 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% -10%, rgba(0,168,232,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 60%, rgba(123,198,126,0.10) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(0,168,232,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,168,232,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 80%);
+  }
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 20px;
+    border-radius: 99px;
+    background: rgba(0,168,232,0.12);
+    border: 1px solid rgba(0,168,232,0.3);
+    font-size: 12px; font-weight: 600; letter-spacing: 2px;
+    color: var(--primary); text-transform: uppercase;
+    margin-bottom: 28px;
+    opacity: 0; transform: translateY(20px);
+    animation: slideUp 0.7s 2.6s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    opacity: 0; transform: translateY(24px);
+    animation: slideUp 0.8s 2.8s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+  .hero-title span {
+    background: var(--gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    max-width: 640px;
+    font-size: 17px; line-height: 1.7;
+    color: var(--text-muted);
+    margin-bottom: 44px;
+    opacity: 0; transform: translateY(24px);
+    animation: slideUp 0.8s 3s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+  .hero-cta {
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    opacity: 0; transform: translateY(24px);
+    animation: slideUp 0.8s 3.2s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+  .btn-primary {
+    padding: 14px 36px;
+    border-radius: 50px;
+    background: var(--gradient);
+    color: #fff; font-weight: 700; font-size: 15px;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    box-shadow: 0 4px 24px rgba(0,168,232,0.35);
+    transition: all var(--transition);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,168,232,0.5); }
+  .btn-outline {
+    padding: 14px 36px;
+    border-radius: 50px;
+    background: transparent;
+    color: var(--primary); font-weight: 700; font-size: 15px;
+    text-decoration: none;
+    border: 2px solid var(--primary); cursor: pointer;
+    transition: all var(--transition);
+  }
+  .btn-outline:hover { background: rgba(0,168,232,0.1); transform: translateY(-2px); }
+
+  @keyframes slideUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-stats {
+    display: flex; gap: 48px; margin-top: 72px;
+    opacity: 0;
+    animation: slideUp 0.8s 3.4s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat-num {
+    font-size: 2.2rem; font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+  /* floating molecules */
+  .molecule {
+    position: absolute; border-radius: 50%;
+    pointer-events: none; opacity: 0.07;
+  }
+  .mol1 {
+    width: 300px; height: 300px; top: 10%; right: -80px;
+    background: radial-gradient(circle, #00A8E8, transparent);
+    animation: molFloat 8s ease-in-out infinite;
+  }
+  .mol2 {
+    width: 200px; height: 200px; bottom: 15%; left: -60px;
+    background: radial-gradient(circle, #7BC67E, transparent);
+    animation: molFloat 10s ease-in-out infinite reverse;
+  }
+  @keyframes molFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.08); }
+  }
+
+  /* ─── ABOUT ─── */
+  .section {
+    padding: 100px 5%;
+    position: relative;
+  }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    color: var(--primary); text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800; line-height: 1.2;
+    margin-bottom: 20px;
+  }
+  .section-desc {
+    max-width: 700px;
+    font-size: 16px; line-height: 1.8;
+    color: var(--text-muted);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+    margin-top: 60px;
+  }
+  .about-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    transition: all var(--transition);
+  }
+  .about-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0,168,232,0.12);
+    border-color: rgba(0,168,232,0.35);
+  }
+  .about-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(0,168,232,0.2), rgba(123,198,126,0.2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 18px;
+  }
+  .about-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+  .about-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+  /* ─── PRODUCTS ─── */
+  .products-section { background: var(--bg2); }
+  .category-tabs {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin: 40px 0 50px;
+  }
+  .cat-tab {
+    padding: 8px 20px;
+    border-radius: 50px;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    color: var(--text-muted);
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+  .cat-tab:hover, .cat-tab.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(0,168,232,0.3);
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .product-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all var(--transition);
+    cursor: pointer;
+    display: none;
+  }
+  .product-card.visible { display: flex; flex-direction: column; }
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,168,232,0.18);
+    border-color: rgba(0,168,232,0.4);
+  }
+  .product-img-wrap {
+    background: linear-gradient(135deg, var(--bg3), var(--card2));
+    padding: 28px 28px 20px;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 190px; position: relative;
+    overflow: hidden;
+  }
+  .product-img-wrap::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 60% 30%, rgba(0,168,232,0.07), transparent 70%);
+  }
+  .product-img {
+    max-width: 180px; max-height: 150px;
+    object-fit: contain;
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    position: relative; z-index: 1;
+  }
+  .product-card:hover .product-img { transform: scale(1.06) translateY(-4px); }
+  .product-body { padding: 20px 22px 24px; flex: 1; display: flex; flex-direction: column; }
+  .product-category {
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .product-name { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .product-molecule { font-size: 13px; color: var(--primary); font-weight: 500; margin-bottom: 10px; }
+  .product-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; flex: 1; }
+  .product-badge {
+    display: inline-block; margin-top: 14px;
+    padding: 4px 12px; border-radius: 99px;
+    background: rgba(0,168,232,0.1); border: 1px solid rgba(0,168,232,0.25);
+    font-size: 11px; font-weight: 600; color: var(--primary);
+  }
+
+  /* ─── CIS SECTION ─── */
+  .cis-section {
+    background: var(--bg3);
+  }
+  .cis-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    align-items: center; margin-top: 52px;
+  }
+  .cis-map {
+    position: relative;
+    background: var(--card);
+    border-radius: 24px;
+    padding: 48px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 280px;
+  }
+  .cis-map-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .pulse-ring {
+    position: absolute; width: 80px; height: 80px;
+    border-radius: 50%; border: 2px solid var(--primary);
+    animation: pulseRing 2.5s ease-out infinite;
+    opacity: 0.5;
+  }
+  .pulse-ring:nth-child(2) { animation-delay: 0.8s; }
+  .pulse-ring:nth-child(3) { animation-delay: 1.6s; }
+  @keyframes pulseRing {
+    0% { transform: scale(0.5); opacity: 0.6; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+  .cis-points { display: flex; flex-direction: column; gap: 20px; }
+  .cis-point {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 20px 22px;
+    background: var(--card);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    transition: all var(--transition);
+  }
+  .cis-point:hover { border-color: rgba(0,168,232,0.4); transform: translateX(6px); }
+  .cis-point-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--primary);
+    margin-top: 5px; flex-shrink: 0;
+    box-shadow: 0 0 10px rgba(0,168,232,0.6);
+  }
+  .cis-point h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .cis-point p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+  /* ─── CONTACT ─── */
+  .contact-section {
+    background: var(--bg2);
+  }
+  .contact-wrap {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    margin-top: 52px;
+  }
+  .contact-info { display: flex; flex-direction: column; gap: 28px; }
+  .contact-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 22px 24px;
+    background: var(--card);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    transition: all var(--transition);
+  }
+  .contact-item:hover { border-color: rgba(0,168,232,0.4); transform: translateX(4px); }
+  .contact-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: linear-gradient(135deg, rgba(0,168,232,0.2), rgba(123,198,126,0.2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .contact-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .contact-item p { font-size: 13px; color: var(--text-muted); }
+  .contact-item a { color: var(--primary); text-decoration: none; }
+
+  /* Form */
+  .contact-form {
+    background: var(--card);
+    border-radius: 24px;
+    padding: 36px;
+    border: 1px solid var(--border);
+  }
+  .contact-form h3 {
+    font-size: 1.3rem; font-weight: 700; margin-bottom: 24px;
+  }
+  .form-group { margin-bottom: 18px; }
+  .form-group label {
+    display: block; font-size: 12px; font-weight: 600;
+    color: var(--text-muted); margin-bottom: 6px; letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 12px 16px;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    color: var(--text); font-size: 14px;
+    font-family: inherit;
+    transition: all var(--transition);
+    outline: none;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0,168,232,0.12);
+  }
+  .form-group textarea { min-height: 110px; resize: vertical; }
+  .form-group select option { background: var(--bg); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .submit-btn {
+    width: 100%; padding: 14px;
+    border-radius: 12px;
+    background: var(--gradient);
+    color: #fff; font-size: 15px; font-weight: 700;
+    border: none; cursor: pointer;
+    transition: all var(--transition);
+    margin-top: 6px;
+  }
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0,168,232,0.4);
+  }
+  .form-success {
+    display: none; text-align: center;
+    padding: 20px; color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 60px 5% 32px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 48px; margin-bottom: 48px;
+  }
+  .footer-logo {
+    height: 36px; margin-bottom: 16px;
+    filter: brightness(0.9);
+  }
+  .footer-about { font-size: 13px; color: var(--text-muted); line-height: 1.7; max-width: 280px; }
+  .footer-col h4 { font-size: 13px; font-weight: 700; margin-bottom: 16px; letter-spacing: 0.5px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color var(--transition); }
+  .footer-col ul a:hover { color: var(--primary); }
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 12px; color: var(--text-muted); }
+
+  /* ─── SCROLL ANIMATION ─── */
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ─── PRODUCT MODAL ─── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 5000;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--card);
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    max-width: 500px; width: 100%;
+    padding: 36px;
+    animation: modalPop 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    position: relative;
+  }
+  @keyframes modalPop {
+    from { opacity: 0; transform: scale(0.92) translateY(16px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .modal-close {
+    position: absolute; top: 18px; right: 18px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); font-size: 18px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all var(--transition);
+  }
+  .modal-close:hover { background: rgba(0,168,232,0.15); color: var(--primary); }
+  .modal-img { max-height: 140px; max-width: 200px; object-fit: contain; margin: 0 auto 20px; display: block; }
+  .modal-name { font-size: 1.5rem; font-weight: 800; margin-bottom: 6px; }
+  .modal-molecule { font-size: 14px; color: var(--primary); font-weight: 600; margin-bottom: 14px; }
+  .modal-desc { font-size: 14px; color: var(--text-muted); line-height: 1.75; }
+
+  /* ─── DIVIDER ─── */
+  .section-divider {
+    height: 1px; background: var(--border);
+    max-width: 100%; margin: 0 5%;
+  }
+
+  /* ─── HAMBURGER ─── */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--text); border-radius: 2px;
+    transition: all var(--transition);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .about-grid, .cis-grid, .contact-wrap, .footer-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .nav-controls { gap: 6px; }
+    .lang-btn { padding: 5px 10px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── LOADER ─── -->
+<div id="loader">
+  <div class="loader-particles" id="loaderParticles"></div>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Novugen_Pharma_logo.svg/2560px-Novugen_Pharma_logo.svg.png"
+       class="loader-logo" id="loaderLogo"
+       onerror="this.style.display='none'; document.getElementById('loaderText2').style.display='block'"
+       alt="Novugen">
+  <!-- fallback text logo -->
+  <div id="loaderText2" style="display:none; font-family:'Playfair Display',serif; font-size:2.4rem; font-weight:800; color:#fff; opacity:0; animation: loaderPop 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.3s forwards;">
+    n<span style="color:#00A8E8">o</span>vugen
+  </div>
+  <div class="loader-bar-wrap">
+    <div class="loader-bar"></div>
+  </div>
+  <div class="loader-text" id="loaderMsg">Loading...</div>
+</div>
+
+<!-- ─── NAVBAR ─── -->
+<nav id="navbar">
+  <!-- Inline SVG logo that always works -->
+  <svg class="nav-logo" viewBox="0 0 220 60" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="scrollTo(0,0)">
+    <circle cx="22" cy="38" r="9" fill="#00A8E8"/>
+    <circle cx="38" cy="30" r="7" fill="#7BC67E"/>
+    <line x1="22" y1="38" x2="38" y2="30" stroke="#8A9BB8" stroke-width="2"/>
+    <text x="52" y="42" font-family="Inter,sans-serif" font-size="26" font-weight="800" fill="currentColor">novugen</text>
+  </svg>
+
+  <ul class="nav-links">
+    <li><a href="#about" data-i18n="nav_about">About</a></li>
+    <li><a href="#products" data-i18n="nav_products">Products</a></li>
+    <li><a href="#cis" data-i18n="nav_cis">CIS Markets</a></li>
+    <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-controls">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('ru')">RU</button>
+    <button class="lang-btn" onclick="setLang('uz')">UZ</button>
+    <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">☀️</button>
+  </div>
+
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="molecule mol1"></div>
+  <div class="molecule mol2"></div>
+
+  <div class="hero-badge" data-i18n="hero_badge">Novugen Pharma Uzbekistan</div>
+  <h1 class="hero-title" data-i18n="hero_title">
+    Advanced Medicines for a <span>Healthier Tomorrow</span>
+  </h1>
+  <p class="hero-sub" data-i18n="hero_sub">
+    A wholly owned subsidiary of Novugen Pharma, certified to the latest cGMP standards — delivering niche, technology-intensive generics across the CIS and Eurasian markets.
+  </p>
+  <div class="hero-cta">
+    <a href="#products" class="btn-primary" data-i18n="hero_cta1">Explore Products</a>
+    <a href="#contact" class="btn-outline" data-i18n="hero_cta2">Request Information</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">20+</div>
+      <div class="hero-stat-label" data-i18n="stat1">Medications</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">6</div>
+      <div class="hero-stat-label" data-i18n="stat2">Therapeutic Areas</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">2019</div>
+      <div class="hero-stat-label" data-i18n="stat3">Established in UZ</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ─── ABOUT ─── -->
+<section class="section" id="about">
+  <div class="section-label" data-i18n="about_label">Who We Are</div>
+  <h2 class="section-title reveal" data-i18n="about_title">Global Expertise,<br>Local Commitment</h2>
+  <p class="section-desc reveal reveal-delay-1" data-i18n="about_desc">
+    Acquired by the Novugen Group in 2019 and revamped to the latest cGMP standards, our Uzbekistan facility is the gateway to CIS and Eurasian markets — bringing world-class generics closer to patients who need them.
+  </p>
+  <div class="about-grid">
+    <div class="about-card reveal reveal-delay-1">
+      <div class="about-icon">🏭</div>
+      <h3 data-i18n="about_c1_title">cGMP Certified Facility</h3>
+      <p data-i18n="about_c1_desc">Fully revamped manufacturing site compliant with current Good Manufacturing Practice requirements, ensuring highest quality standards.</p>
+    </div>
+    <div class="about-card reveal reveal-delay-2">
+      <div class="about-icon">🌍</div>
+      <h3 data-i18n="about_c2_title">CIS Market Gateway</h3>
+      <p data-i18n="about_c2_desc">Strategically positioned to serve the Commonwealth of Independent States and the growing Eurasian pharmaceutical markets.</p>
+    </div>
+    <div class="about-card reveal reveal-delay-2">
+      <div class="about-icon">🔬</div>
+      <h3 data-i18n="about_c3_title">Oncology Specialization</h3>
+      <p data-i18n="about_c3_desc">Deep expertise in niche, technology-intensive oncology generics and chronic disease treatments with proven efficacy profiles.</p>
+    </div>
+    <div class="about-card reveal reveal-delay-3">
+      <div class="about-icon">🤝</div>
+      <h3 data-i18n="about_c4_title">Global Vision</h3>
+      <p data-i18n="about_c4_desc">Aligned with Novugen's global vision to expand reach worldwide, delivering affordable innovation to patients across regions.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ─── PRODUCTS ─── -->
+<section class="section products-section" id="products">
+  <div class="section-label" data-i18n="prod_label">Our Portfolio</div>
+  <h2 class="section-title reveal" data-i18n="prod_title">Pharmaceutical Products</h2>
+  <p class="section-desc reveal reveal-delay-1" data-i18n="prod_desc">Explore our comprehensive range of medications across six therapeutic areas, each crafted to global quality standards.</p>
+
+  <div class="category-tabs reveal reveal-delay-2">
+    <button class="cat-tab active" onclick="filterCat('all')" data-i18n="cat_all">All</button>
+    <button class="cat-tab" onclick="filterCat('cardio')" data-i18n="cat_cardio">Cardiovascular</button>
+    <button class="cat-tab" onclick="filterCat('metabolic')" data-i18n="cat_metabolic">Metabolic</button>
+    <button class="cat-tab" onclick="filterCat('onco')" data-i18n="cat_onco">Oncology</button>
+    <button class="cat-tab" onclick="filterCat('uro')" data-i18n="cat_uro">Urology</button>
+    <button class="cat-tab" onclick="filterCat('anti')" data-i18n="cat_anti">Anti-Infectives</button>
+    <button class="cat-tab" onclick="filterCat('neuro')" data-i18n="cat_neuro">Neurology</button>
+  </div>
+
+  <div class="products-grid" id="productsGrid">
+    <!-- Cards injected by JS -->
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ─── CIS ─── -->
+<section class="section cis-section" id="cis">
+  <div class="section-label" data-i18n="cis_label">Market Presence</div>
+  <h2 class="section-title reveal" data-i18n="cis_title">Expanding Across<br>CIS & Eurasia</h2>
+  <div class="cis-grid">
+    <div class="cis-map reveal">
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring"></div>
+      <div class="cis-map-label" data-i18n="cis_map_label">CIS Region<br><span style="font-size:0.9rem;font-weight:400;color:var(--text-muted)">Uzbekistan HQ</span></div>
+    </div>
+    <div class="cis-points">
+      <div class="cis-point reveal reveal-delay-1">
+        <div class="cis-point-dot"></div>
+        <div>
+          <h4 data-i18n="cis_p1_title">Strategic Acquisition</h4>
+          <p data-i18n="cis_p1_desc">The facility was acquired in 2019 and completely revamped to meet the latest cGMP requirements, enabling rapid market entry.</p>
+        </div>
+      </div>
+      <div class="cis-point reveal reveal-delay-2">
+        <div class="cis-point-dot"></div>
+        <div>
+          <h4 data-i18n="cis_p2_title">Growing Regional Access</h4>
+          <p data-i18n="cis_p2_desc">Our presence gives Novugen stronger access in the CIS and Eurasian markets — among the fastest-growing pharmaceutical regions.</p>
+        </div>
+      </div>
+      <div class="cis-point reveal reveal-delay-3">
+        <div class="cis-point-dot"></div>
+        <div>
+          <h4 data-i18n="cis_p3_title">Global Expansion Vision</h4>
+          <p data-i18n="cis_p3_desc">Aligned with Novugen's mission to expand reach globally, our CIS presence is a cornerstone of the group's international strategy.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ─── CONTACT ─── -->
+<section class="section contact-section" id="contact">
+  <div class="section-label" data-i18n="contact_label">Get In Touch</div>
+  <h2 class="section-title reveal" data-i18n="contact_title">Send Us a Request</h2>
+  <p class="section-desc reveal reveal-delay-1" data-i18n="contact_desc">Interested in our products or partnership opportunities? Fill out the form below and our team will respond promptly.</p>
+
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <div class="contact-item reveal reveal-delay-1">
+        <div class="contact-icon">📍</div>
+        <div>
+          <h4 data-i18n="contact_addr_title">Address</h4>
+          <p data-i18n="contact_addr">Tashkent, Uzbekistan</p>
+        </div>
+      </div>
+      <div class="contact-item reveal reveal-delay-2">
+        <div class="contact-icon">📧</div>
+        <div>
+          <h4>Email</h4>
+          <p><a href="mailto:info@novugen.com">info@novugen.com</a></p>
+        </div>
+      </div>
+      <div class="contact-item reveal reveal-delay-2">
+        <div class="contact-icon">🌐</div>
+        <div>
+          <h4 data-i18n="contact_web_title">Website</h4>
+          <p><a href="https://www.novugen.com" target="_blank">www.novugen.com</a></p>
+        </div>
+      </div>
+      <div class="contact-item reveal reveal-delay-3">
+        <div class="contact-icon">📱</div>
+        <div>
+          <h4 data-i18n="contact_social_title">Social Media</h4>
+          <p><a href="https://www.facebook.com/novugen" target="_blank">Facebook / Novugen</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal reveal-delay-2">
+      <h3 data-i18n="form_title">Leave a Request</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label data-i18n="form_name">Name</label>
+          <input type="text" id="f_name" placeholder="John Smith">
+        </div>
+        <div class="form-group">
+          <label data-i18n="form_org">Organization</label>
+          <input type="text" id="f_org" placeholder="Hospital / Clinic">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="f_email" placeholder="email@example.com">
+      </div>
+      <div class="form-group">
+        <label data-i18n="form_product">Product of Interest</label>
+        <select id="f_product">
+          <option value="" data-i18n="form_select">Select a product...</option>
+          <option>Rivaksajen (Rivaroxaban)</option>
+          <option>Klogrel (Clopidogrel)</option>
+          <option>Novtor (Rosuvastatin)</option>
+          <option>Valun / Amval (Amlodipine + Valsartan)</option>
+          <option>Dapiga (Dapagliflozin)</option>
+          <option>Genezis MR / Diaglycon MR (Gliclazide)</option>
+          <option>Sitafor / Sitafor-M (Sitagliptin)</option>
+          <option>Everolimus</option>
+          <option>Pazorene (Pazopanib)</option>
+          <option>Ontrex (Pemetrexed)</option>
+          <option>Tigralis (Tadalafil)</option>
+          <option>Zetrol (Azithromycin)</option>
+          <option>Siprofin (Ciprofloxacin)</option>
+          <option>Novugab (Pregabalin)</option>
+          <option>Eticox / Elipix (Etoricoxib)</option>
+          <option>Novuzome (Esomeprazole)</option>
+          <option>Meberin MR (Mebeverine)</option>
+          <option data-i18n="form_other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label data-i18n="form_msg">Message</label>
+        <textarea id="f_msg" placeholder="Tell us about your inquiry..."></textarea>
+      </div>
+      <button class="submit-btn" onclick="submitForm()">
+        <span data-i18n="form_send">Send Request →</span>
+      </button>
+      <div class="form-success" id="formSuccess" data-i18n="form_success">
+        ✅ Thank you! We will contact you soon.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <svg class="footer-logo" viewBox="0 0 220 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="22" cy="38" r="9" fill="#00A8E8"/>
+        <circle cx="38" cy="30" r="7" fill="#7BC67E"/>
+        <line x1="22" y1="38" x2="38" y2="30" stroke="#8A9BB8" stroke-width="2"/>
+        <text x="52" y="42" font-family="Inter,sans-serif" font-size="26" font-weight="800" fill="currentColor">novugen</text>
+      </svg>
+      <p class="footer-about" data-i18n="footer_about">Novugen Pharma Uzbekistan — a wholly owned subsidiary bringing world-class generics to the CIS and Eurasian markets since 2019.</p>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer_products">Products</h4>
+      <ul>
+        <li><a href="#products">Cardiovascular</a></li>
+        <li><a href="#products">Oncology</a></li>
+        <li><a href="#products">Metabolic</a></li>
+        <li><a href="#products">Urology</a></li>
+        <li><a href="#products">Neurology</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer_company">Company</h4>
+      <ul>
+        <li><a href="#about" data-i18n="nav_about">About Us</a></li>
+        <li><a href="#cis">CIS Markets</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+        <li><a href="https://www.novugen.com" target="_blank">novugen.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Novugen Pharma Uzbekistan. <span data-i18n="footer_rights">All rights reserved.</span></p>
+    <p style="color:var(--text-muted); font-size:11px;" data-i18n="footer_legal">For healthcare professionals only. Consult a physician before use.</p>
+  </div>
+</footer>
+
+<!-- ─── PRODUCT MODAL ─── -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <img id="modalImg" class="modal-img" src="" alt="">
+    <div class="modal-name" id="modalName"></div>
+    <div class="modal-molecule" id="modalMolecule"></div>
+    <div class="modal-desc" id="modalDesc"></div>
+  </div>
+</div>
+
+<script>
+// ─── TRANSLATIONS ───
+const i18n = {
+  en: {
+    nav_about: 'About', nav_products: 'Products', nav_cis: 'CIS Markets', nav_contact: 'Contact',
+    hero_badge: 'Novugen Pharma Uzbekistan',
+    hero_title: 'Advanced Medicines for a <span>Healthier Tomorrow</span>',
+    hero_sub: 'A wholly owned subsidiary of Novugen Pharma, certified to the latest cGMP standards — delivering niche, technology-intensive generics across the CIS and Eurasian markets.',
+    hero_cta1: 'Explore Products', hero_cta2: 'Request Information',
+    stat1: 'Medications', stat2: 'Therapeutic Areas', stat3: 'Established in UZ',
+    about_label: 'Who We Are', about_title: 'Global Expertise,\nLocal Commitment',
+    about_desc: 'Acquired by the Novugen Group in 2019 and revamped to the latest cGMP standards, our Uzbekistan facility is the gateway to CIS and Eurasian markets.',
+    about_c1_title: 'cGMP Certified Facility', about_c1_desc: 'Fully revamped manufacturing site compliant with current Good Manufacturing Practice requirements.',
+    about_c2_title: 'CIS Market Gateway', about_c2_desc: 'Strategically positioned to serve the Commonwealth of Independent States and the growing Eurasian markets.',
+    about_c3_title: 'Oncology Specialization', about_c3_desc: 'Deep expertise in niche, technology-intensive oncology generics and chronic disease treatments.',
+    about_c4_title: 'Global Vision', about_c4_desc: 'Aligned with Novugen\'s global vision to expand reach worldwide, delivering affordable innovation.',
+    prod_label: 'Our Portfolio', prod_title: 'Pharmaceutical Products',
+    prod_desc: 'Explore our comprehensive range of medications across six therapeutic areas, each crafted to global quality standards.',
+    cat_all: 'All', cat_cardio: 'Cardiovascular', cat_metabolic: 'Metabolic', cat_onco: 'Oncology',
+    cat_uro: 'Urology', cat_anti: 'Anti-Infectives', cat_neuro: 'Neurology',
+    cis_label: 'Market Presence', cis_title: 'Expanding Across\nCIS & Eurasia',
+    cis_map_label: 'CIS Region<br><span style="font-size:0.9rem;font-weight:400;color:var(--text-muted)">Uzbekistan HQ</span>',
+    cis_p1_title: 'Strategic Acquisition', cis_p1_desc: 'Acquired in 2019 and revamped to cGMP standards, enabling rapid market entry.',
+    cis_p2_title: 'Growing Regional Access', cis_p2_desc: 'Stronger access in the CIS and Eurasian markets — among the fastest-growing pharmaceutical regions.',
+    cis_p3_title: 'Global Expansion Vision', cis_p3_desc: 'Aligned with Novugen\'s mission to expand reach globally.',
+    contact_label: 'Get In Touch', contact_title: 'Send Us a Request',
+    contact_desc: 'Interested in our products or partnership opportunities? Fill out the form and our team will respond promptly.',
+    contact_addr_title: 'Address', contact_addr: 'Tashkent, Uzbekistan',
+    contact_web_title: 'Website', contact_social_title: 'Social Media',
+    form_title: 'Leave a Request', form_name: 'Name', form_org: 'Organization',
+    form_product: 'Product of Interest', form_select: 'Select a product...',
+    form_msg: 'Message', form_send: 'Send Request →', form_other: 'Other',
+    form_success: '✅ Thank you! We will contact you soon.',
+    footer_about: 'Novugen Pharma Uzbekistan — bringing world-class generics to the CIS and Eurasian markets since 2019.',
+    footer_products: 'Products', footer_company: 'Company',
+    footer_rights: 'All rights reserved.', footer_legal: 'For healthcare professionals only. Consult a physician before use.'
+  },
+  ru: {
+    nav_about: 'О нас', nav_products: 'Препараты', nav_cis: 'Рынки СНГ', nav_contact: 'Контакты',
+    hero_badge: 'Novugen Pharma Узбекистан',
+    hero_title: 'Передовые лекарства для <span>здорового будущего</span>',
+    hero_sub: 'Дочернее предприятие Novugen Pharma, сертифицированное по стандартам надлежащей производственной практики (НПП) — поставляем высокотехнологичные генерики на рынки СНГ и Евразии.',
+    hero_cta1: 'Смотреть препараты', hero_cta2: 'Оставить заявку',
+    stat1: 'Препаратов', stat2: 'Терапевтических направлений', stat3: 'Год основания в УЗ',
+    about_label: 'О компании', about_title: 'Мировой опыт,\nлокальная ответственность',
+    about_desc: 'Приобретённое группой Novugen в 2019 году и модернизированное по последним стандартам НПП, наше предприятие в Узбекистане является воротами на рынки СНГ и Евразии.',
+    about_c1_title: 'Сертификат НПП', about_c1_desc: 'Полностью модернизированное производство, соответствующее требованиям надлежащей производственной практики.',
+    about_c2_title: 'Ворота на рынок СНГ', about_c2_desc: 'Стратегически расположены для обслуживания рынков Содружества Независимых Государств и растущего евразийского региона.',
+    about_c3_title: 'Онкологическая специализация', about_c3_desc: 'Глубокая экспертиза в производстве нишевых высокотехнологичных онкологических дженериков.',
+    about_c4_title: 'Глобальное видение', about_c4_desc: 'В соответствии с глобальной стратегией Novugen мы расширяем присутствие на международных рынках.',
+    prod_label: 'Наш портфель', prod_title: 'Лекарственные препараты',
+    prod_desc: 'Наш портфель охватывает шесть терапевтических направлений — каждый препарат разработан по мировым стандартам качества.',
+    cat_all: 'Все', cat_cardio: 'Кардиология', cat_metabolic: 'Эндокринология', cat_onco: 'Онкология',
+    cat_uro: 'Урология', cat_anti: 'Антибиотики', cat_neuro: 'Неврология',
+    cis_label: 'Присутствие на рынке', cis_title: 'Расширение на рынках\nСНГ и Евразии',
+    cis_map_label: 'Регион СНГ<br><span style="font-size:0.9rem;font-weight:400;color:var(--text-muted)">Штаб-квартира в Узбекистане</span>',
+    cis_p1_title: 'Стратегическое приобретение', cis_p1_desc: 'Приобретено в 2019 году и модернизировано до стандартов НПП для быстрого выхода на рынок.',
+    cis_p2_title: 'Расширение регионального доступа', cis_p2_desc: 'Более широкий доступ на быстрорастущие фармацевтические рынки СНГ и Евразии.',
+    cis_p3_title: 'Глобальная стратегия', cis_p3_desc: 'Согласована с миссией Novugen по расширению глобального присутствия.',
+    contact_label: 'Связаться с нами', contact_title: 'Оставьте заявку',
+    contact_desc: 'Заинтересованы в наших препаратах или партнёрстве? Заполните форму — мы ответим в ближайшее время.',
+    contact_addr_title: 'Адрес', contact_addr: 'Ташкент, Узбекистан',
+    contact_web_title: 'Веб-сайт', contact_social_title: 'Социальные сети',
+    form_title: 'Оставить заявку', form_name: 'Имя', form_org: 'Организация',
+    form_product: 'Интересующий препарат', form_select: 'Выберите препарат...',
+    form_msg: 'Сообщение', form_send: 'Отправить заявку →', form_other: 'Другое',
+    form_success: '✅ Спасибо! Мы свяжемся с вами в ближайшее время.',
+    footer_about: 'Novugen Pharma Узбекистан — поставляем передовые дженерики на рынки СНГ и Евразии с 2019 года.',
+    footer_products: 'Препараты', footer_company: 'Компания',
+    footer_rights: 'Все права защищены.', footer_legal: 'Только для медицинских специалистов. Перед применением проконсультируйтесь с врачом.'
+  },
+  uz: {
+    nav_about: 'Biz haqimizda', nav_products: 'Dorilar', nav_cis: 'MDB Bozorlari', nav_contact: 'Aloqa',
+    hero_badge: 'Novugen Pharma O\'zbekiston',
+    hero_title: 'Kelajak sog\'ligi uchun <span>ilg\'or dorilar</span>',
+    hero_sub: 'Novugen Pharma\'ning to\'liq sho\'ba korxonasi — GMP standartlarini to\'liq qonoiqtirgan holda MDB va Yevroosiyo bozorlariga yuqori texnologiyali jenerik dorilarni yetkazib beradi.',
+    hero_cta1: 'Dorilarni ko\'rish', hero_cta2: 'Murojaat qoldirish',
+    stat1: 'Dori vositalar', stat2: 'Terapevtik yo\'nalishlar', stat3: 'O\'zbekistonda tashkil etilgan',
+    about_label: 'Biz haqimizda', about_title: 'Global tajriba,\nmahalliy javobgarlik',
+    about_desc: '2019 yilda Novugen guruhi tomonidan sotib olingan va zamonaviy GMP talablariga muvofiq qayta jihozlangan bizning O\'zbekistondagi zavodimiz MDB va Yevroosiyo bozorlariga eshik bo\'lib xizmat qiladi.',
+    about_c1_title: 'GMP Sertifikati', about_c1_desc: 'Ishlab chiqarish xonadonimiz zamonaviy GMP talablariga to\'liq javob beradi va yuqori sifat standartlarini ta\'minlaydi.',
+    about_c2_title: 'MDB Bozoriga Eshik', about_c2_desc: 'MDH va rivojlanayotgan Yevroosiyo farmatsevtika bozorlariga xizmat ko\'rsatish uchun strategik joylashtirilgan.',
+    about_c3_title: 'Onkologiya Mutaxassisligi', about_c3_desc: 'Niş, yuqori texnologiyali onkologik jeneriklar va surunkali kasalliklarni davolashda chuqur tajriba.',
+    about_c4_title: 'Global Maqsad', about_c4_desc: 'Novugen\'ning global kengayish missiyasiga mos holda arzon innovatsion dorilarni yetkazib berish.',
+    prod_label: 'Bizning Portfel', prod_title: 'Farmatsevtik Dorilar',
+    prod_desc: 'Olti terapevtik yo\'nalishni qamrab olgan keng doiradagi dorilarimizni ko\'ring — har biri xalqaro sifat standartlariga muvofiq ishlab chiqarilgan.',
+    cat_all: 'Barchasi', cat_cardio: 'Yurak-tomir', cat_metabolic: 'Endokrinologiya', cat_onco: 'Onkologiya',
+    cat_uro: 'Urologiya', cat_anti: 'Antibiotiklar', cat_neuro: 'Nevrologiya',
+    cis_label: 'Bozordagi mavjudlik', cis_title: 'MDB va Yevroosiyo bozorlarini\nkengaytirish',
+    cis_map_label: 'MDB Hududi<br><span style="font-size:0.9rem;font-weight:400;color:var(--text-muted)">Markaziy ofis: O\'zbekiston</span>',
+    cis_p1_title: 'Strategik Sotib Olish', cis_p1_desc: '2019 yilda sotib olinib, GMP standartlariga muvofiq qayta jihozlangan va tezda bozorga kirish imkonini yaratdi.',
+    cis_p2_title: 'Mintaqaviy Kirishni Kengaytirish', cis_p2_desc: 'MDB va Yevroosiyo bozorlariga — eng tez o\'sayotgan farmatsevtika mintaqalariga kuchli kirish imkoniyati.',
+    cis_p3_title: 'Global Kengayish Maqsadi', cis_p3_desc: 'Novugen\'ning global miqyosda kengayish missiyasiga to\'liq mos keladi.',
+    contact_label: 'Biz bilan bog\'laning', contact_title: 'Murojaat qoldiring',
+    contact_desc: 'Dorilarimiz yoki hamkorlik imkoniyatlariga qiziqsangiz, formani to\'ldiring va jamoamiz tez orada javob beradi.',
+    contact_addr_title: 'Manzil', contact_addr: 'Toshkent, O\'zbekiston',
+    contact_web_title: 'Veb-sayt', contact_social_title: 'Ijtimoiy tarmoqlar',
+    form_title: 'Murojaat qoldiring', form_name: 'Ism', form_org: 'Tashkilot',
+    form_product: 'Qiziqtiruvchi dori', form_select: 'Dori tanlang...',
+    form_msg: 'Xabar', form_send: 'Murojaat jo\'natish →', form_other: 'Boshqa',
+    form_success: '✅ Rahmat! Tez orada siz bilan bog\'lanamiz.',
+    footer_about: 'Novugen Pharma O\'zbekiston — 2019 yildan beri MDB va Yevroosiyo bozorlariga xalqaro darajadagi jeneriklar yetkazib beradi.',
+    footer_products: 'Dorilar', footer_company: 'Kompaniya',
+    footer_rights: 'Barcha huquqlar himoyalangan.', footer_legal: 'Faqat tibbiyot mutaxassislari uchun. Foydalanishdan oldin shifokor bilan maslahatlashing.'
+  }
+};
+
+// ─── PRODUCT DATA ───
+const products = [
+  // Cardiovascular
+  { id: 'rivaksajen', name: 'Rivaksajen', molecule: 'Rivaroxaban', cat: 'cardio',
+    img: '/mnt/user-data/uploads/1.webp',
+    en: 'An anticoagulant (blood thinner) used to treat and prevent deep vein thrombosis and pulmonary embolism.',
+    ru: 'Антикоагулянт для лечения и профилактики тромбоза глубоких вен и тромбоэмболии лёгочной артерии.',
+    uz: 'Chuqur tomirlar trombozi va o\'pka arteriyasi tromboemboliyasini davolash va oldini olish uchun antikoagulyant.',
+    cat_en: 'Cardiovascular', cat_ru: 'Кардиология', cat_uz: 'Yurak-tomir' },
+  { id: 'klogrel', name: 'Klogrel', molecule: 'Clopidogrel', cat: 'cardio',
+    img: null,
+    en: 'Antiplatelet medication used to prevent blood clots in people who have had a recent heart attack or stroke.',
+    ru: 'Антиагрегант для предотвращения тромбообразования у пациентов после инфаркта или инсульта.',
+    uz: 'Infarkt yoki insultdan so\'ng tromb hosil bo\'lishining oldini oluvchi antiaggregant.',
+    cat_en: 'Cardiovascular', cat_ru: 'Кардиология', cat_uz: 'Yurak-tomir' },
+  { id: 'novtor', name: 'Novtor', molecule: 'Rosuvastatin', cat: 'cardio',
+    img: null,
+    en: 'Used to lower cholesterol and triglycerides, reducing the risk of heart disease.',
+    ru: 'Снижает уровень холестерина и триглицеридов, уменьшая риск сердечно-сосудистых заболеваний.',
+    uz: 'Qondagi xolesterin va triglitseridlar miqdorini kamaytiradi, yurak kasalliklari xavfini pasaytiradi.',
+    cat_en: 'Cardiovascular', cat_ru: 'Кардиология', cat_uz: 'Yurak-tomir' },
+  { id: 'valun', name: 'Valun / Amval', molecule: 'Amlodipine + Valsartan', cat: 'cardio',
+    img: null,
+    en: 'Treats essential hypertension in adults. Dual mechanism for blood pressure control.',
+    ru: 'Применяется для лечения эссенциальной артериальной гипертензии у взрослых.',
+    uz: 'Kattalardagi arterial gipertenziyani davolash uchun ikki mexanizmli preparat.',
+    cat_en: 'Cardiovascular', cat_ru: 'Кардиология', cat_uz: 'Yurak-tomir' },
+  // Metabolic
+  { id: 'dapiga', name: 'Dapiga', molecule: 'Dapagliflozin', cat: 'metabolic',
+    img: null,
+    en: 'SGLT2 inhibitor used alongside diet and exercise to treat type 2 diabetes mellitus.',
+    ru: 'Ингибитор SGLT2 для лечения сахарного диабета 2 типа в сочетании с диетой.',
+    uz: '2-tur qandli diabetni parhez va jismoniy mashqlar bilan birgalikda davolash uchun SGLT2 inhibitori.',
+    cat_en: 'Metabolic', cat_ru: 'Эндокринология', cat_uz: 'Endokrinologiya' },
+  { id: 'genezis', name: 'Genezis MR / Diaglycon MR', molecule: 'Gliclazide', cat: 'metabolic',
+    img: null,
+    en: 'Oral antidiabetic agent used to control blood sugar in type 2 diabetes.',
+    ru: 'Пероральный гипогликемический препарат пролонгированного действия для 2 типа диабета.',
+    uz: '2-tur diabetda qand miqdorini pasaytiruvchi uzoq ta\'sirli og\'iz orqali qabul qilinadigan dori.',
+    cat_en: 'Metabolic', cat_ru: 'Эндокринология', cat_uz: 'Endokrinologiya' },
+  { id: 'sitafor', name: 'Sitafor / Sitafor-M', molecule: 'Sitagliptin (+ Metformin)', cat: 'metabolic',
+    img: null,
+    en: 'Antidiabetic medication to manage blood sugar levels. Available as mono or combination therapy.',
+    ru: 'Антидиабетический препарат для контроля уровня глюкозы. Доступен как монотерапия или комбинация.',
+    uz: 'Qondagi qand miqdorini nazorat qiluvchi, monoterapiya yoki kombinatsiya sifatida mavjud.',
+    cat_en: 'Metabolic', cat_ru: 'Эндокринология', cat_uz: 'Endokrinologiya' },
+  // Oncology
+  { id: 'everolimus', name: 'Everolimus', molecule: 'Everolimus', cat: 'onco',
+    img: null,
+    en: 'Immunosuppressant and targeted cancer therapy for breast cancer, renal cell carcinoma, and neuroendocrine tumors.',
+    ru: 'Таргетный противоопухолевый препарат при раке молочной железы, почечно-клеточном раке и НЭО.',
+    uz: 'Ko\'krak saratoni, buyrak-hujayrali saraton va neyroendokrin o\'smalarda ishlatiladigan target dori.',
+    cat_en: 'Oncology', cat_ru: 'Онкология', cat_uz: 'Onkologiya' },
+  { id: 'pazorene', name: 'Pazorene', molecule: 'Pazopanib', cat: 'onco',
+    img: null,
+    en: 'Kinase inhibitor for advanced renal cell carcinoma and soft tissue sarcoma.',
+    ru: 'Ингибитор киназ для лечения распространённого почечно-клеточного рака и саркомы мягких тканей.',
+    uz: 'Rivojlangan buyrak-hujayrali saraton va yumshoq to\'qimalar sarkomasiga qarshi kinaza inhibitori.',
+    cat_en: 'Oncology', cat_ru: 'Онкология', cat_uz: 'Onkologiya' },
+  { id: 'ontrex', name: 'Ontrex', molecule: 'Pemetrexed', cat: 'onco',
+    img: null,
+    en: 'IV chemotherapy medication primarily for non-small cell lung cancer.',
+    ru: 'Химиотерапевтический препарат для внутривенного введения при немелкоклеточном раке лёгкого.',
+    uz: 'Asosan o\'pkaning mayda hujayrali bo\'lmagan saratonida qo\'llaniladigan vena ichiga yuboriladigan kimyoterapiya dorisi.',
+    cat_en: 'Oncology', cat_ru: 'Онкология', cat_uz: 'Onkologiya' },
+  // Urology
+  { id: 'tigralis', name: 'Tigralis', molecule: 'Tadalafil', cat: 'uro',
+    img: null,
+    en: 'Treats erectile dysfunction and benign prostatic hyperplasia (BPH).',
+    ru: 'Лечение эректильной дисфункции и доброкачественной гиперплазии предстательной железы.',
+    uz: 'Erektil disfunksiya va prostata bezining xavfsiz giperplaziyasini davolash uchun.',
+    cat_en: 'Urology', cat_ru: 'Урология', cat_uz: 'Urologiya' },
+  { id: 'enura', name: 'En-Ura / Renaxin', molecule: 'Solifenacin', cat: 'uro',
+    img: null,
+    en: 'Treats overactive bladder symptoms such as frequent and urgent urination.',
+    ru: 'Лечение симптомов гиперактивного мочевого пузыря (частые и ургентные позывы).',
+    uz: 'Giperaktiv qovuq belgilarini (tez-tez va to\'satdan siydik qistashini) davolash uchun.',
+    cat_en: 'Urology', cat_ru: 'Урология', cat_uz: 'Urologiya' },
+  { id: 'duoride', name: 'Duoride-T', molecule: 'Dutasteride + Tamsulosin', cat: 'uro',
+    img: null,
+    en: 'Treats BPH symptoms and improves urinary flow. Dual-action combination.',
+    ru: 'Лечение симптомов ДГПЖ и улучшение оттока мочи. Комбинированный препарат двойного действия.',
+    uz: 'PBXG belgilarini davolash va siydik yo\'lini yaxshilash uchun ikki ta\'sirli kombinatsiya.',
+    cat_en: 'Urology', cat_ru: 'Урология', cat_uz: 'Urologiya' },
+  // Anti-infectives
+  { id: 'zetrol', name: 'Zetrol', molecule: 'Azithromycin', cat: 'anti',
+    img: '/mnt/user-data/uploads/5.webp',
+    en: 'Macrolide antibiotic for a wide variety of bacterial infections.',
+    ru: 'Антибиотик группы макролидов для лечения широкого спектра бактериальных инфекций.',
+    uz: 'Turli xil bakterial infeksiyalarni davolashda keng qo\'llaniladigan makrolidlar guruhiga mansub antibiotik.',
+    cat_en: 'Anti-Infectives', cat_ru: 'Антибиотики', cat_uz: 'Antibiotiklar' },
+  { id: 'siprofin', name: 'Siprofin', molecule: 'Ciprofloxacin', cat: 'anti',
+    img: null,
+    en: 'Broad-spectrum fluoroquinolone antibiotic for bacterial infections.',
+    ru: 'Антибиотик широкого спектра действия из группы фторхинолонов.',
+    uz: 'Keng ta\'sir doirasiga ega ftorxinolonlar guruhiga mansub antibiotik.',
+    cat_en: 'Anti-Infectives', cat_ru: 'Антибиотики', cat_uz: 'Antibiotiklar' },
+  // Neurology
+  { id: 'novugab', name: 'Novugab', molecule: 'Pregabalin', cat: 'neuro',
+    img: null,
+    en: 'Treats neuropathic pain (nerve pain) and certain types of seizures.',
+    ru: 'Лечение нейропатической боли и некоторых видов эпилептических приступов.',
+    uz: 'Nevropatik og\'riqlar va tutqanoq xurujlarining ayrim turlarini davolash uchun.',
+    cat_en: 'Neurology', cat_ru: 'Неврология', cat_uz: 'Nevrologiya' },
+  { id: 'eticox', name: 'Eticox / Elipix', molecule: 'Etoricoxib', cat: 'neuro',
+    img: '/mnt/user-data/uploads/4.webp',
+    en: 'NSAID used to relieve pain and inflammation associated with arthritis and osteoarthritis.',
+    ru: 'НПВП для снятия боли и воспаления при артрите и остеоартрозе.',
+    uz: 'Artrit va osteoartrozda og\'riq va yallig\'lanishni kamaytiruvchi NYAQV.',
+    cat_en: 'Neurology', cat_ru: 'Неврология', cat_uz: 'Nevrologiya' },
+  // Bonus from photos
+  { id: 'novuzome', name: 'Novuzome', molecule: 'Esomeprazole', cat: 'metabolic',
+    img: '/mnt/user-data/uploads/2.webp',
+    en: 'Proton pump inhibitor for treatment of acid-related gastrointestinal disorders.',
+    ru: 'Ингибитор протонной помпы для лечения кислотозависимых желудочно-кишечных расстройств.',
+    uz: 'Kislota bilan bog\'liq oshqozon-ichak kasalliklarini davolash uchun proton nasos inhibitori.',
+    cat_en: 'Metabolic', cat_ru: 'Эндокринология', cat_uz: 'Endokrinologiya' },
+  { id: 'meberin', name: 'Meberin MR', molecule: 'Mebeverine 200mg', cat: 'neuro',
+    img: '/mnt/user-data/uploads/3.webp',
+    en: 'Antispasmodic used to treat symptoms of irritable bowel syndrome (IBS).',
+    ru: 'Спазмолитик для лечения симптомов синдрома раздражённого кишечника (СРК).',
+    uz: 'Tirishishga qarshi dori — bezovta ichak sindromi (BIS) belgilarini davolash uchun ishlatiladi.',
+    cat_en: 'Neurology', cat_ru: 'Неврология', cat_uz: 'Nevrologiya' },
+];
+
+let currentLang = 'en';
+let currentCat = 'all';
+
+// ─── LANG SWITCH ───
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach((b, i) => {
+    b.classList.toggle('active', ['en','ru','uz'][i] === lang);
+  });
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18n[lang][key] !== undefined) el.innerHTML = i18n[lang][key];
+  });
+  renderProducts();
+}
+
+// ─── THEME TOGGLE ───
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.querySelector('.theme-btn').textContent = isDark ? '🌙' : '☀️';
+}
+
+// ─── CATEGORY FILTER ───
+function filterCat(cat) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  renderProducts();
+}
+
+// ─── RENDER PRODUCTS ───
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = '';
+  const filtered = currentCat === 'all' ? products : products.filter(p => p.cat === currentCat);
+
+  filtered.forEach((p, i) => {
+    const cat_label = p[`cat_${currentLang}`] || p.cat_en;
+    const desc = p[currentLang] || p.en;
+
+    // placeholder color per category
+    const colors = { cardio:'#E8F4FF', metabolic:'#F0FFF4', onco:'#FFF0F5', uro:'#F5F0FF', anti:'#FFFBF0', neuro:'#F0F5FF' };
+
+    const imgEl = p.img
+      ? `<img class="product-img" src="${p.img}" alt="${p.name}" loading="lazy">`
+      : `<div style="width:140px;height:110px;border-radius:12px;background:${colors[p.cat]||'#F0F5FF'};display:flex;align-items:center;justify-content:center;font-size:2rem;">💊</div>`;
+
+    const card = document.createElement('div');
+    card.className = 'product-card visible';
+    card.style.animationDelay = `${i * 0.05}s`;
+    card.innerHTML = `
+      <div class="product-img-wrap">${imgEl}</div>
+      <div class="product-body">
+        <div class="product-category">${cat_label}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-molecule">${p.molecule}</div>
+        <div class="product-desc">${desc}</div>
+        <span class="product-badge">${currentLang === 'en' ? 'Learn More →' : currentLang === 'ru' ? 'Подробнее →' : 'Batafsil →'}</span>
+      </div>`;
+    card.onclick = () => openModal(p);
+    grid.appendChild(card);
+
+    // entrance animation
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    setTimeout(() => {
+      card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, i * 60 + 20);
+  });
+}
+
+// ─── MODAL ───
+function openModal(p) {
+  document.getElementById('modalImg').src = p.img || '';
+  document.getElementById('modalImg').style.display = p.img ? 'block' : 'none';
+  document.getElementById('modalName').textContent = p.name;
+  document.getElementById('modalMolecule').textContent = p.molecule;
+  document.getElementById('modalDesc').textContent = p[currentLang] || p.en;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modalOverlay')) {
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
+}
+
+// ─── FORM ───
+function submitForm() {
+  const name = document.getElementById('f_name').value;
+  const email = document.getElementById('f_email').value;
+  if (!name || !email) {
+    alert(currentLang === 'ru' ? 'Заполните имя и email.' : currentLang === 'uz' ? 'Ism va emailni kiriting.' : 'Please fill in name and email.');
+    return;
+  }
+  document.getElementById('formSuccess').style.display = 'block';
+  document.querySelector('.submit-btn').style.opacity = '0.5';
+  document.querySelector('.submit-btn').disabled = true;
+}
+
+// ─── SCROLL REVEAL ───
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ─── LOADER ───
+function spawnParticles() {
+  const c = document.getElementById('loaderParticles');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'lp';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.setProperty('--d', (2.5 + Math.random() * 2.5) + 's');
+    p.style.setProperty('--delay', (Math.random() * 2) + 's');
+    p.style.background = Math.random() > 0.5 ? '#00A8E8' : '#7BC67E';
+    p.style.width = p.style.height = (3 + Math.random() * 5) + 'px';
+    c.appendChild(p);
+  }
+}
+spawnParticles();
+
+const msgs = {
+  en: ['Loading…', 'Preparing products…', 'Almost ready…'],
+  ru: ['Загрузка…', 'Подготовка препаратов…', 'Почти готово…'],
+  uz: ['Yuklanmoqda…', 'Dorilar tayyorlanmoqda…', 'Deyarli tayyor…']
+};
+let msgI = 0;
+const msgEl = document.getElementById('loaderMsg');
+const msgInterval = setInterval(() => {
+  msgI = (msgI + 1) % msgs[currentLang].length;
+  msgEl.textContent = msgs[currentLang][msgI];
+}, 600);
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    clearInterval(msgInterval);
+    document.getElementById('loader').classList.add('hide');
+    renderProducts();
+    setTimeout(() => document.getElementById('loader').style.display = 'none', 800);
+  }, 2600);
+});
+
+// fallback if load fires early
+setTimeout(() => {
+  if (document.getElementById('loader') && !document.getElementById('loader').classList.contains('hide')) {
+    document.getElementById('loader').classList.add('hide');
+    renderProducts();
+  }
+}, 4000);
+</script>
+</body>
+</html>
